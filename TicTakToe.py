@@ -41,30 +41,53 @@ if __name__ == "__main__":
         xAxis = [0,0,0,0,0,0,0,0,0]
         yAxis = [0,0,0,0,0,0,0,0,0]
         turn = 1 # 1 for X and 0 for O
+        restart = False
         print("Welcome to TicTakToe Game")
         p1 = input("Enter the name of the player 1 : you will get X : ")
         p2 = input("Enter the name of the player 2 : You will get O : ")
         while True:
+            if restart == True:
+                turn =1
+            restart = False
             printBoard(xAxis,yAxis)
             if turn == 1:
                 print(f"{p1}'s Chance")
-                value = int(input("Enter the Position where you want to place your X "))
-                xAxis[value] =1
+                try:
+                    value = int(input("Enter the Position where you want to place your X "))
+                    if value >= 0 or value <= 8:
+                        xAxis[value] =1
+                        
+                    else:
+                        print("Invalid move. Try again.")
+                        continue
+                except Exception as e:
+                    print("Invalid Value please Enter Correct Number")
+                    continue
             else:
                 print(f"{p2}'s Chance")
-                value = int(input("Enter the Position where you want to place your O "))
-                yAxis[value] =1
+                try:
+                    value = int(input("Enter the Position where you want to place your O "))
+                    if value >= 0 or value <= 8:
+                        yAxis[value] =1
+                        
+                    else:
+                        print("Invalid move. Try again.")
+                        continue
+                except Exception as e:
+                    print("Invalid Value please Enter Correct Number")
+                    continue
 
             winnercheck = checkisWinner(xAxis,yAxis,p1,p2)
             if winnercheck != -1:
                 print("match over ")
                 playagain = input("Press y if you want to play again ")
                 if playagain.lower() == "y":
-                    turn =1
                     xAxis = [0,0,0,0,0,0,0,0,0]
                     yAxis = [0,0,0,0,0,0,0,0,0]
+                    restart = True
                     continue
                 else:
+                    print("Thanks for playing! Goodbye.")
                     break
             turn = 1 - turn 
 
